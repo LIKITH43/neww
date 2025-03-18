@@ -5,3 +5,11 @@ sentence-transformers
 pdfplumber
 gradio_client
 python-dotenv
+streamlit
+chromadb==0.4.24
+torch
+sentence-transformers
+pdfplumber
+gradio_client
+python-dotenv
+pysqlite3-binary  # Ensures correct SQLite version
