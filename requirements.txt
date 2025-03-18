@@ -1,0 +1,7 @@
+streamlit
+chromadb
+torch
+sentence-transformers
+pdfplumber
+gradio_client
+python-dotenv
