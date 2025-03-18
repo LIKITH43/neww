@@ -1,6 +1,3 @@
-# Install required dependencies (for local development; ignored on Streamlit Cloud)
-!pip install streamlit chromadb torch sentence-transformers pdfplumber gradio_client python-dotenv pysqlite3-binary
-
 import os
 import sys
 import streamlit as st
@@ -14,7 +11,7 @@ from gradio_client import Client
 from dotenv import load_dotenv
 import pdfplumber
 
-# ✅ Force ChromaDB to use pysqlite3 instead of system SQLite
+# ✅ Ensure ChromaDB uses the correct SQLite version
 os.environ["SQLITE_LIBRARY_PATH"] = sys.prefix + "/lib"
 os.environ["LD_LIBRARY_PATH"] = sys.prefix + "/lib"
 os.environ["PATH"] += os.pathsep + sys.prefix + "/bin"
