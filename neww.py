@@ -1,14 +1,9 @@
-# Install required dependencies
+# Install required dependencies (for local development; ignored on Streamlit Cloud)
+!pip install streamlit chromadb torch sentence-transformers pdfplumber gradio_client python-dotenv pysqlite3-binary
 
-import os
-import streamlit as st
 import os
 import sys
-# Force ChromaDB to use pysqlite3 instead of system SQLite
-os.environ["SQLITE_LIBRARY_PATH"] = sys.prefix + "/lib"
-os.environ["LD_LIBRARY_PATH"] = sys.prefix + "/lib"
-os.environ["PATH"] += os.pathsep + sys.prefix + "/bin"
-
+import streamlit as st
 import chromadb
 import logging
 import torch
@@ -18,6 +13,11 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from gradio_client import Client
 from dotenv import load_dotenv
 import pdfplumber
+
+# ✅ Force ChromaDB to use pysqlite3 instead of system SQLite
+os.environ["SQLITE_LIBRARY_PATH"] = sys.prefix + "/lib"
+os.environ["LD_LIBRARY_PATH"] = sys.prefix + "/lib"
+os.environ["PATH"] += os.pathsep + sys.prefix + "/bin"
 
 # Configure Logging
 logging.basicConfig(
@@ -29,7 +29,7 @@ logger = logging.getLogger(__name__)
 
 class LegalRAG:
     def __init__(self, embedding_model='sentence-transformers/all-MiniLM-L6-v2',
-                 llm_model='LEGALSUMMAI',
+                 llm_model='meta-llama/Meta-Llama-3-8B-Instruct',
                  db_path='./chroma_db', collection_name='legal_docs'):
         load_dotenv()
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -37,7 +37,7 @@ class LegalRAG:
         
         self.embedding_model = SentenceTransformer(embedding_model)
         self.text_splitter = RecursiveCharacterTextSplitter(chunk_size=1024, chunk_overlap=100)
-        self.llm = Client("LEGALSUMMAI")
+        self.llm = Client("KingNish/Very-Fast-Chatbot")
         
         self.chroma_client = chromadb.PersistentClient(path=db_path)
         self.collection = self.chroma_client.get_or_create_collection(name=collection_name)
@@ -108,7 +108,7 @@ class LegalRAG:
 
 # Streamlit Deployment
 def main():
-    st.set_page_config(page_title="🏛️ LegalBot: Indian Law Expert", page_icon="⚖️", layout="wide")
+    st.set_page_config(page_title="LegalBot", page_icon="⚖️", layout="wide")
     st.title("🏛️ LegalBot: Indian Law Expert")
 
     rag_system = LegalRAG()
