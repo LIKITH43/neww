@@ -11,7 +11,6 @@ from dotenv import load_dotenv
 import pdfplumber
 
 # Ensure compatibility with ChromaDB
-os.system("pip install numpy==1.23.5 chromadb==0.4.22")
 
 # Configure Logging
 logging.basicConfig(
