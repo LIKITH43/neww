@@ -1,4 +1,5 @@
 # Install required dependencies
+!pip install streamlit chromadb torch sentence-transformers pdfplumber gradio_client python-dotenv
 
 import os
 import streamlit as st
@@ -22,7 +23,7 @@ logger = logging.getLogger(__name__)
 
 class LegalRAG:
     def __init__(self, embedding_model='sentence-transformers/all-MiniLM-L6-v2',
-                 llm_model='meta-llama/Meta-Llama-3-8B-Instruct',
+                 llm_model='LEGALSUMMAI',
                  db_path='./chroma_db', collection_name='legal_docs'):
         load_dotenv()
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -30,7 +31,7 @@ class LegalRAG:
         
         self.embedding_model = SentenceTransformer(embedding_model)
         self.text_splitter = RecursiveCharacterTextSplitter(chunk_size=1024, chunk_overlap=100)
-        self.llm = Client("KingNish/Very-Fast-Chatbot")
+        self.llm = Client("LEGALSUMMAI")
         
         self.chroma_client = chromadb.PersistentClient(path=db_path)
         self.collection = self.chroma_client.get_or_create_collection(name=collection_name)
@@ -101,7 +102,7 @@ class LegalRAG:
 
 # Streamlit Deployment
 def main():
-    st.set_page_config(page_title="LegalBot", page_icon="⚖️", layout="wide")
+    st.set_page_config(page_title="🏛️ LegalBot: Indian Law Expert", page_icon="⚖️", layout="wide")
     st.title("🏛️ LegalBot: Indian Law Expert")
 
     rag_system = LegalRAG()
