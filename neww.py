@@ -1,5 +1,4 @@
 # Install required dependencies
-!pip install streamlit chromadb torch sentence-transformers pdfplumber gradio_client python-dotenv
 
 import os
 import streamlit as st
