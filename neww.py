@@ -2,6 +2,13 @@
 
 import os
 import streamlit as st
+import os
+import sys
+# Force ChromaDB to use pysqlite3 instead of system SQLite
+os.environ["SQLITE_LIBRARY_PATH"] = sys.prefix + "/lib"
+os.environ["LD_LIBRARY_PATH"] = sys.prefix + "/lib"
+os.environ["PATH"] += os.pathsep + sys.prefix + "/bin"
+
 import chromadb
 import logging
 import torch
