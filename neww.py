@@ -1,5 +1,4 @@
 import os
-import sys
 import streamlit as st
 import chromadb
 import logging
@@ -11,10 +10,8 @@ from gradio_client import Client
 from dotenv import load_dotenv
 import pdfplumber
 
-# ✅ Ensure ChromaDB uses the correct SQLite version
-os.environ["SQLITE_LIBRARY_PATH"] = sys.prefix + "/lib"
-os.environ["LD_LIBRARY_PATH"] = sys.prefix + "/lib"
-os.environ["PATH"] += os.pathsep + sys.prefix + "/bin"
+# Ensure compatibility with ChromaDB
+os.system("pip install numpy==1.23.5 chromadb==0.4.22")
 
 # Configure Logging
 logging.basicConfig(
@@ -34,7 +31,7 @@ class LegalRAG:
         
         self.embedding_model = SentenceTransformer(embedding_model)
         self.text_splitter = RecursiveCharacterTextSplitter(chunk_size=1024, chunk_overlap=100)
-        self.llm = Client("KingNish/Very-Fast-Chatbot")
+        self.llm = Client("LEGALSUMMAI")
         
         self.chroma_client = chromadb.PersistentClient(path=db_path)
         self.collection = self.chroma_client.get_or_create_collection(name=collection_name)
