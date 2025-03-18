@@ -1,9 +1,10 @@
 streamlit
-chromadb==0.4.22  # ✅ Stable version to avoid compatibility issues
+chromadb==0.4.22
+numpy==1.23.5
 torch
 sentence-transformers
 pdfplumber
 gradio_client
 python-dotenv
 pysqlite3-binary
-numpy==1.23.5  # ✅ Avoids compatibility issues with ChromaDB
+langchain
